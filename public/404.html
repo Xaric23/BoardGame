@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+  <script>
+    // GitHub Pages SPA redirect workaround
+    // When a 404 occurs, redirect to the base path with the original path as a query parameter
+    (function() {
+      var basePath = '/BoardGame/';
+      var redirect = window.location.pathname + window.location.search + window.location.hash;
+      
+      // Only redirect if we're not already at the base path
+      if (redirect !== basePath && redirect !== basePath.slice(0, -1)) {
+        // Preserve the full URL for the SPA to handle
+        window.location.replace(basePath + '?redirect=' + encodeURIComponent(redirect));
+      } else {
+        // If we're at the base path, just redirect there
+        window.location.replace(basePath);
+      }
+    })();
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>

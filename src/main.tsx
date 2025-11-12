@@ -9,8 +9,9 @@ import App from './App.tsx'
 const params = new URLSearchParams(window.location.search);
 const redirect = params.get('redirect');
 if (redirect) {
-  // Remove the redirect parameter and update the URL
-  const newUrl = window.location.origin + window.location.pathname + redirect;
+  // Remove the redirect parameter and restore the original URL
+  // The redirect parameter contains the full path from 404.html
+  const newUrl = window.location.origin + redirect;
   window.history.replaceState(null, '', newUrl);
 }
 

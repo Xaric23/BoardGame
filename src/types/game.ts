@@ -1,0 +1,107 @@
+// Core game types and interfaces
+
+export type PlayerClass = 'Warrior' | 'Mage' | 'Rogue' | 'Cleric';
+export type PlayerRace = 'Human' | 'Elf' | 'Dwarf' | 'Orc';
+export type TileType = 'empty' | 'start' | 'enemy' | 'treasure' | 'event' | 'boss' | 'exit';
+export type Direction = 'north' | 'south' | 'east' | 'west';
+
+export interface Position {
+  x: number;
+  y: number;
+}
+
+export interface Ability {
+  id: string;
+  name: string;
+  description: string;
+  damage?: number;
+  healing?: number;
+  cooldown: number;
+  currentCooldown: number;
+}
+
+export interface PlayerStats {
+  maxHealth: number;
+  currentHealth: number;
+  attack: number;
+  defense: number;
+  speed: number;
+}
+
+export interface Player {
+  id: string;
+  name: string;
+  class: PlayerClass;
+  race: PlayerRace;
+  stats: PlayerStats;
+  abilities: Ability[];
+  position: Position;
+  isAlive: boolean;
+  inventory: Item[];
+  gold: number;
+}
+
+export interface Enemy {
+  id: string;
+  name: string;
+  level: number;
+  stats: {
+    maxHealth: number;
+    currentHealth: number;
+    attack: number;
+    defense: number;
+  };
+  position: Position;
+  goldReward: number;
+  expReward: number;
+}
+
+export interface Item {
+  id: string;
+  name: string;
+  type: 'weapon' | 'armor' | 'potion' | 'treasure';
+  attackBonus?: number;
+  defenseBonus?: number;
+  healAmount?: number;
+  value: number;
+}
+
+export interface Tile {
+  position: Position;
+  type: TileType;
+  isRevealed: boolean;
+  enemy?: Enemy;
+  items?: Item[];
+  event?: GameEvent;
+}
+
+export interface GameEvent {
+  id: string;
+  type: 'trap' | 'shrine' | 'merchant' | 'mystery';
+  description: string;
+  effect: (player: Player) => void;
+}
+
+export interface GameBoard {
+  width: number;
+  height: number;
+  tiles: Map<string, Tile>;
+  depth: number;
+}
+
+export interface GameState {
+  board: GameBoard;
+  players: Player[];
+  currentPlayerIndex: number;
+  turnNumber: number;
+  isGameOver: boolean;
+  seed: string;
+  runStartTime: number;
+}
+
+export interface CharacterCreation {
+  name: string;
+  class: PlayerClass;
+  race: PlayerRace;
+  selectedAbilities: Ability[];
+}

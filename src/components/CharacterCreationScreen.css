@@ -1,0 +1,216 @@
+.character-creation {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #fff;
+  padding: 2rem;
+}
+
+.character-creation h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.creation-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.player-count-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.player-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.player-buttons button {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  background: #0f3460;
+  color: #fff;
+  border: 2px solid #16213e;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.player-buttons button:hover {
+  background: #16213e;
+  border-color: #e94560;
+}
+
+.player-buttons button.selected {
+  background: #e94560;
+  border-color: #e94560;
+  transform: scale(1.05);
+}
+
+.character-form {
+  background: rgba(15, 52, 96, 0.5);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 2px solid #16213e;
+}
+
+.character-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #e94560;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  background: #1a1a2e;
+  border: 2px solid #16213e;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #e94560;
+}
+
+.selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.selection-card {
+  background: #1a1a2e;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #16213e;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.selection-card:hover {
+  border-color: #e94560;
+  transform: translateY(-4px);
+}
+
+.selection-card.selected {
+  background: #0f3460;
+  border-color: #e94560;
+  box-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
+}
+
+.selection-card h3 {
+  margin: 0 0 0.5rem 0;
+  color: #e94560;
+}
+
+.selection-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.stats-preview,
+.abilities-preview {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(26, 26, 46, 0.5);
+  border-radius: 8px;
+}
+
+.stats-preview h3,
+.abilities-preview h3 {
+  margin-top: 0;
+  color: #e94560;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background: #0f3460;
+  border-radius: 4px;
+}
+
+.stat-label {
+  font-weight: bold;
+}
+
+.stat-value {
+  color: #4ecca3;
+}
+
+.abilities-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.ability-card {
+  background: #0f3460;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #16213e;
+}
+
+.ability-card h4 {
+  margin: 0 0 0.5rem 0;
+  color: #4ecca3;
+}
+
+.ability-card p {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.ability-card small {
+  color: #999;
+}
+
+.start-button {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 2rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  background: #e94560;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.start-button:hover:not(:disabled) {
+  background: #c7354d;
+  transform: scale(1.02);
+}
+
+.start-button:disabled {
+  background: #555;
+  cursor: not-allowed;
+}

@@ -57,6 +57,13 @@ export const PlayerPanel = ({ player, isCurrentPlayer }: Props) => {
           ))}
         </div>
 
+        <div className="racial-passive">
+          <h4>🌟 Racial Passive:</h4>
+          <div className="passive-item">
+            <span className="passive-name">{player.racialPassive.name}</span>
+          </div>
+        </div>
+
         {player.inventory.length > 0 && (
           <div className="inventory">
             <h4>Inventory:</h4>

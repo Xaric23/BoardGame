@@ -8,8 +8,8 @@ export interface User {
   loginTime: number;
 }
 
-export type PlayerClass = 'Warrior' | 'Mage' | 'Rogue' | 'Cleric';
-export type PlayerRace = 'Human' | 'Elf' | 'Dwarf' | 'Orc';
+export type PlayerClass = 'Warrior' | 'Mage' | 'Rogue' | 'Cleric' | 'Ranger' | 'Paladin';
+export type PlayerRace = 'Human' | 'Elf' | 'Dwarf' | 'Orc' | 'Halfling' | 'Dragonborn';
 export type TileType = 'empty' | 'start' | 'enemy' | 'treasure' | 'event' | 'boss' | 'exit';
 export type Direction = 'north' | 'south' | 'east' | 'west';
 
@@ -28,6 +28,20 @@ export interface Ability {
   currentCooldown: number;
 }
 
+export interface RacialPassive {
+  id: string;
+  name: string;
+  description: string;
+  effectType: 'combat' | 'survival' | 'utility';
+  // Passive effects applied automatically
+  damageReduction?: number; // Percentage or flat reduction
+  criticalChance?: number; // Percentage chance for critical hits
+  dodgeChance?: number; // Percentage chance to dodge attacks
+  healingBonus?: number; // Percentage bonus to healing received
+  goldBonus?: number; // Percentage bonus to gold found
+  experienceBonus?: number; // Percentage bonus to experience gained
+}
+
 export interface PlayerStats {
   maxHealth: number;
   currentHealth: number;
@@ -43,6 +57,7 @@ export interface Player {
   race: PlayerRace;
   stats: PlayerStats;
   abilities: Ability[];
+  racialPassive: RacialPassive;
   position: Position;
   isAlive: boolean;
   inventory: Item[];

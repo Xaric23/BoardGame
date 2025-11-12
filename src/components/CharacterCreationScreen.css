@@ -229,6 +229,54 @@
   color: #999;
 }
 
+.racial-passive-preview {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(26, 26, 46, 0.5);
+  border-radius: 8px;
+}
+
+.racial-passive-preview h3 {
+  margin-top: 0;
+  color: #e94560;
+}
+
+.passive-card {
+  background: #0f3460;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #fbbf24;
+  margin-top: 1rem;
+}
+
+.passive-card h4 {
+  margin: 0 0 0.5rem 0;
+  color: #fbbf24;
+  font-size: 1.2rem;
+}
+
+.passive-card p {
+  margin: 0 0 1rem 0;
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+.passive-effects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.passive-effect {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
 .start-button {
   width: 100%;
   padding: 1rem;

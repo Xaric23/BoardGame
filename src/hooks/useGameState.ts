@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import type { GameState, Player, Position, CharacterCreation } from '../types/game';
 import { generateDungeon, getTile, setTile, revealAdjacentTiles, isValidPosition } from '../utils/dungeonGenerator';
 import { performAttack, useAbility as applyAbility, updateCooldowns, pickupItem, checkPlayerDeath, checkEnemyDeath, gainRewards } from '../utils/combatSystem';
-import { getBaseStats, getAbilitiesForClass } from '../models/characterData';
+import { getBaseStats, getAbilitiesForClass, getRacialPassive } from '../models/characterData';
 
 export const useGameState = () => {
   const [gameState, setGameState] = useState<GameState | null>(null);
@@ -23,6 +23,7 @@ export const useGameState = () => {
       race: char.race,
       stats: getBaseStats(char.class, char.race),
       abilities: getAbilitiesForClass(char.class).slice(0, 3),
+      racialPassive: getRacialPassive(char.race),
       position: { x: Math.floor(board.width / 2), y: Math.floor(board.height / 2) },
       isAlive: true,
       inventory: [],

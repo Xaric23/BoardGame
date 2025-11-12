@@ -111,7 +111,8 @@
 }
 
 .abilities h4,
-.inventory h4 {
+.inventory h4,
+.racial-passive h4 {
   margin: 0.5rem 0;
   font-size: 0.9rem;
   color: #e94560;
@@ -142,6 +143,23 @@
   border-radius: 50%;
   font-size: 0.75rem;
   font-weight: bold;
+}
+
+.racial-passive {
+  margin-top: 0.5rem;
+}
+
+.passive-item {
+  background: rgba(251, 191, 36, 0.2);
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.passive-name {
+  color: #fbbf24;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .inventory .items {

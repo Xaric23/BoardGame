@@ -1,4 +1,4 @@
-import type { GameState } from '../types/game';
+import type { GameState, User } from '../types/game';
 import { GameBoard } from './GameBoard';
 import { PlayerPanel } from './PlayerPanel';
 import { GameControls } from './GameControls';
@@ -11,16 +11,26 @@ interface Props {
   onAttack: () => void;
   onUseAbility: (index: number) => void;
   onReset: () => void;
+  user: User;
+  onLogout: () => void;
 }
 
-export const GameScreen = ({ gameState, gameLog, onMove, onAttack, onUseAbility, onReset }: Props) => {
+export const GameScreen = ({ gameState, gameLog, onMove, onAttack, onUseAbility, onReset, user, onLogout }: Props) => {
   return (
     <div className="game-screen">
       <div className="game-header">
-        <h1>⚔️ Dungeon Delvers ⚔️</h1>
-        <button className="reset-button" onClick={onReset}>
-          🔄 New Game
-        </button>
+        <div className="header-left">
+          <h1>⚔️ Dungeon Delvers ⚔️</h1>
+          <span className="user-name">Playing as: {user.name}</span>
+        </div>
+        <div className="header-right">
+          <button className="reset-button" onClick={onReset}>
+            🔄 New Game
+          </button>
+          <button className="logout-button" onClick={onLogout}>
+            Logout
+          </button>
+        </div>
       </div>
 
       {gameState.isGameOver && (

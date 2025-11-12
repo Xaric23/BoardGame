@@ -1,5 +1,13 @@
 // Core game types and interfaces
 
+export interface User {
+  id: string;
+  name: string;
+  email?: string;
+  loginMethod: 'username' | 'google';
+  loginTime: number;
+}
+
 export type PlayerClass = 'Warrior' | 'Mage' | 'Rogue' | 'Cleric';
 export type PlayerRace = 'Human' | 'Elf' | 'Dwarf' | 'Orc';
 export type TileType = 'empty' | 'start' | 'enemy' | 'treasure' | 'event' | 'boss' | 'exit';

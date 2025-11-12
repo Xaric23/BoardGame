@@ -13,27 +13,59 @@
   margin: 0 auto 1rem;
 }
 
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
 .game-header h1 {
   margin: 0;
   font-size: 2rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.reset-button {
+.user-name {
+  font-size: 0.9rem;
+  color: #10b981;
+  font-weight: 600;
+}
+
+.header-right {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.reset-button,
+.logout-button {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: bold;
-  background: #0f3460;
-  color: #fff;
   border: 2px solid #16213e;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s;
 }
 
+.reset-button {
+  background: #0f3460;
+  color: #fff;
+}
+
 .reset-button:hover {
   background: #16213e;
   border-color: #e94560;
+}
+
+.logout-button {
+  background: #ef4444;
+  color: white;
+  border-color: #dc2626;
+}
+
+.logout-button:hover {
+  background: #dc2626;
+  border-color: #b91c1c;
 }
 
 .game-content {

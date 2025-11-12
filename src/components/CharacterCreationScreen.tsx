@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { CharacterCreation, PlayerClass, PlayerRace } from '../types/game';
+import type { CharacterCreation, PlayerClass, PlayerRace, User } from '../types/game';
 import {
   CLASS_DESCRIPTIONS,
   RACE_DESCRIPTIONS,
@@ -10,9 +10,11 @@ import './CharacterCreationScreen.css';
 
 interface Props {
   onStartGame: (characters: CharacterCreation[], numPlayers: number) => void;
+  user: User;
+  onLogout: () => void;
 }
 
-export const CharacterCreationScreen = ({ onStartGame }: Props) => {
+export const CharacterCreationScreen = ({ onStartGame, user, onLogout }: Props) => {
   const [numPlayers, setNumPlayers] = useState(1);
   const [currentStep, setCurrentStep] = useState(0);
   const [characters, setCharacters] = useState<CharacterCreation[]>([
@@ -67,6 +69,14 @@ export const CharacterCreationScreen = ({ onStartGame }: Props) => {
 
   return (
     <div className="character-creation">
+      <div className="user-header">
+        <div className="user-info">
+          <span className="user-greeting">Welcome, {user.name}!</span>
+        </div>
+        <button className="logout-button" onClick={onLogout}>
+          Logout
+        </button>
+      </div>
       <h1>⚔️ Dungeon Delvers ⚔️</h1>
       <div className="creation-container">
         {currentStep === 0 && (

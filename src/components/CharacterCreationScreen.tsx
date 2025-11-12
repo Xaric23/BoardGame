@@ -5,6 +5,7 @@ import {
   RACE_DESCRIPTIONS,
   getAbilitiesForClass,
   getBaseStats,
+  getRacialPassive,
 } from '../models/characterData';
 import './CharacterCreationScreen.css';
 
@@ -21,8 +22,8 @@ export const CharacterCreationScreen = ({ onStartGame, user, onLogout }: Props) 
     { name: '', class: 'Warrior', race: 'Human', selectedAbilities: [] },
   ]);
 
-  const classes: PlayerClass[] = ['Warrior', 'Mage', 'Rogue', 'Cleric'];
-  const races: PlayerRace[] = ['Human', 'Elf', 'Dwarf', 'Orc'];
+  const classes: PlayerClass[] = ['Warrior', 'Mage', 'Rogue', 'Cleric', 'Ranger', 'Paladin'];
+  const races: PlayerRace[] = ['Human', 'Elf', 'Dwarf', 'Orc', 'Halfling', 'Dragonborn'];
 
   const handleNumPlayersChange = (num: number) => {
     setNumPlayers(num);
@@ -66,6 +67,7 @@ export const CharacterCreationScreen = ({ onStartGame, user, onLogout }: Props) 
   const currentChar = characters[currentStep];
   const abilities = getAbilitiesForClass(currentChar.class);
   const stats = getBaseStats(currentChar.class, currentChar.race);
+  const racialPassive = getRacialPassive(currentChar.race);
 
   return (
     <div className="character-creation">
@@ -175,6 +177,34 @@ export const CharacterCreationScreen = ({ onStartGame, user, onLogout }: Props) 
                   <small>Cooldown: {ability.cooldown} turns</small>
                 </div>
               ))}
+            </div>
+          </div>
+
+          <div className="racial-passive-preview">
+            <h3>Racial Passive:</h3>
+            <div className="passive-card">
+              <h4>🌟 {racialPassive.name}</h4>
+              <p>{racialPassive.description}</p>
+              <div className="passive-effects">
+                {racialPassive.damageReduction && (
+                  <span className="passive-effect">-{racialPassive.damageReduction} Damage Taken</span>
+                )}
+                {racialPassive.criticalChance && (
+                  <span className="passive-effect">+{racialPassive.criticalChance}% Crit Chance</span>
+                )}
+                {racialPassive.dodgeChance && (
+                  <span className="passive-effect">+{racialPassive.dodgeChance}% Dodge Chance</span>
+                )}
+                {racialPassive.healingBonus && (
+                  <span className="passive-effect">+{racialPassive.healingBonus}% Healing</span>
+                )}
+                {racialPassive.goldBonus && (
+                  <span className="passive-effect">+{racialPassive.goldBonus}% Gold</span>
+                )}
+                {racialPassive.experienceBonus && (
+                  <span className="passive-effect">+{racialPassive.experienceBonus}% Experience</span>
+                )}
+              </div>
             </div>
           </div>
 

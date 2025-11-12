@@ -1,4 +1,4 @@
-import type { PlayerClass, PlayerRace, Ability, PlayerStats } from '../types/game';
+import type { PlayerClass, PlayerRace, Ability, PlayerStats, RacialPassive } from '../types/game';
 
 // Class-based abilities
 export const WARRIOR_ABILITIES: Ability[] = [
@@ -105,6 +105,58 @@ export const CLERIC_ABILITIES: Ability[] = [
   },
 ];
 
+export const RANGER_ABILITIES: Ability[] = [
+  {
+    id: 'precise_shot',
+    name: 'Precise Shot',
+    description: 'A carefully aimed arrow that never misses',
+    damage: 16,
+    cooldown: 2,
+    currentCooldown: 0,
+  },
+  {
+    id: 'tracking',
+    name: 'Tracking',
+    description: 'Reveal nearby enemies and treasure',
+    cooldown: 3,
+    currentCooldown: 0,
+  },
+  {
+    id: 'volley',
+    name: 'Volley',
+    description: 'Rain arrows on enemies dealing area damage',
+    damage: 10,
+    cooldown: 4,
+    currentCooldown: 0,
+  },
+];
+
+export const PALADIN_ABILITIES: Ability[] = [
+  {
+    id: 'righteous_strike',
+    name: 'Righteous Strike',
+    description: 'Strike with divine fury',
+    damage: 14,
+    cooldown: 2,
+    currentCooldown: 0,
+  },
+  {
+    id: 'lay_on_hands',
+    name: 'Lay on Hands',
+    description: 'Channel divine energy to heal wounds',
+    healing: 15,
+    cooldown: 3,
+    currentCooldown: 0,
+  },
+  {
+    id: 'divine_shield',
+    name: 'Divine Shield',
+    description: 'Become invulnerable and taunt enemies',
+    cooldown: 5,
+    currentCooldown: 0,
+  },
+];
+
 // Base stats for each class
 export const CLASS_BASE_STATS: Record<PlayerClass, PlayerStats> = {
   Warrior: {
@@ -135,6 +187,20 @@ export const CLASS_BASE_STATS: Record<PlayerClass, PlayerStats> = {
     defense: 7,
     speed: 6,
   },
+  Ranger: {
+    maxHealth: 85,
+    currentHealth: 85,
+    attack: 13,
+    defense: 6,
+    speed: 8,
+  },
+  Paladin: {
+    maxHealth: 95,
+    currentHealth: 95,
+    attack: 11,
+    defense: 9,
+    speed: 4,
+  },
 };
 
 // Racial bonuses
@@ -160,6 +226,67 @@ export const RACE_BONUSES: Record<PlayerRace, Partial<PlayerStats>> = {
     currentHealth: 15,
     defense: -2,
   },
+  Halfling: {
+    speed: 4,
+    defense: 1,
+    maxHealth: -10,
+    currentHealth: -10,
+  },
+  Dragonborn: {
+    maxHealth: 15,
+    currentHealth: 15,
+    attack: 3,
+    defense: 2,
+  },
+};
+
+// Racial passives - unique abilities for each race
+export const RACIAL_PASSIVES: Record<PlayerRace, RacialPassive> = {
+  Human: {
+    id: 'adaptability',
+    name: 'Adaptability',
+    description: 'Bonus experience and gold from all sources',
+    effectType: 'utility',
+    experienceBonus: 10,
+    goldBonus: 10,
+  },
+  Elf: {
+    id: 'elven_grace',
+    name: 'Elven Grace',
+    description: 'High chance to dodge attacks',
+    effectType: 'combat',
+    dodgeChance: 15,
+  },
+  Dwarf: {
+    id: 'stone_resilience',
+    name: 'Stone Resilience',
+    description: 'Reduce all incoming damage',
+    effectType: 'survival',
+    damageReduction: 2,
+  },
+  Orc: {
+    id: 'berserker_rage',
+    name: 'Berserker Rage',
+    description: 'Critical hits deal massive damage',
+    effectType: 'combat',
+    criticalChance: 20,
+  },
+  Halfling: {
+    id: 'luck_of_the_small',
+    name: 'Luck of the Small',
+    description: 'Lucky in finding treasure and avoiding damage',
+    effectType: 'utility',
+    dodgeChance: 10,
+    goldBonus: 25,
+  },
+  Dragonborn: {
+    id: 'draconic_heritage',
+    name: 'Draconic Heritage',
+    description: 'Elemental resistance and enhanced healing',
+    effectType: 'survival',
+    damageReduction: 1,
+    healingBonus: 20,
+  },
 };
 
 export const getAbilitiesForClass = (playerClass: PlayerClass): Ability[] => {
@@ -172,6 +299,10 @@ export const getAbilitiesForClass = (playerClass: PlayerClass): Ability[] => {
       return [...ROGUE_ABILITIES];
     case 'Cleric':
       return [...CLERIC_ABILITIES];
+    case 'Ranger':
+      return [...RANGER_ABILITIES];
+    case 'Paladin':
+      return [...PALADIN_ABILITIES];
   }
 };
 
@@ -188,11 +319,17 @@ export const getBaseStats = (playerClass: PlayerClass, race: PlayerRace): Player
   };
 };
 
+export const getRacialPassive = (race: PlayerRace): RacialPassive => {
+  return { ...RACIAL_PASSIVES[race] };
+};
+
 export const CLASS_DESCRIPTIONS: Record<PlayerClass, string> = {
   Warrior: 'Masters of melee combat with high health and defense',
   Mage: 'Wielders of powerful magic with devastating spells',
   Rogue: 'Swift assassins with high damage and evasion',
   Cleric: 'Holy warriors who can heal and smite enemies',
+  Ranger: 'Expert marksmen with nature tracking abilities',
+  Paladin: 'Holy knights with divine powers and strong defense',
 };
 
 export const RACE_DESCRIPTIONS: Record<PlayerRace, string> = {
@@ -200,4 +337,6 @@ export const RACE_DESCRIPTIONS: Record<PlayerRace, string> = {
   Elf: 'Agile and precise with bonus to speed and attack',
   Dwarf: 'Sturdy and resilient with high health and defense',
   Orc: 'Powerful brutes with massive attack but lower defense',
+  Halfling: 'Small and nimble with exceptional luck',
+  Dragonborn: 'Draconic heritage grants elemental resistance',
 };

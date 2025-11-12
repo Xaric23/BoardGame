@@ -1,8 +1,39 @@
 import type { Player, Enemy, Ability, Item } from '../types/game';
 
+// Helper function to check if an attack should be dodged based on dodge chance
+const shouldDodge = (dodgeChance: number): boolean => {
+  return Math.random() * 100 < dodgeChance;
+};
+
+// Helper function to check if an attack should be a critical hit
+const shouldCrit = (critChance: number): boolean => {
+  return Math.random() * 100 < critChance;
+};
+
 export const performAttack = (attacker: Player | Enemy, defender: Player | Enemy): number => {
   const baseDamage = attacker.stats.attack;
-  const actualDamage = Math.max(1, baseDamage - defender.stats.defense);
+  let actualDamage = Math.max(1, baseDamage - defender.stats.defense);
+
+  // Apply racial passives for player attackers (critical hit)
+  if ('racialPassive' in attacker && attacker.racialPassive.criticalChance) {
+    if (shouldCrit(attacker.racialPassive.criticalChance)) {
+      actualDamage = Math.floor(actualDamage * 1.5);
+    }
+  }
+
+  // Apply racial passives for player defenders (dodge and damage reduction)
+  if ('racialPassive' in defender) {
+    // Check dodge chance
+    if (defender.racialPassive.dodgeChance && shouldDodge(defender.racialPassive.dodgeChance)) {
+      return 0; // Attack was dodged
+    }
+    
+    // Apply damage reduction
+    if (defender.racialPassive.damageReduction) {
+      actualDamage = Math.max(1, actualDamage - defender.racialPassive.damageReduction);
+    }
+  }
+
   defender.stats.currentHealth = Math.max(0, defender.stats.currentHealth - actualDamage);
   return actualDamage;
 };
@@ -20,13 +51,27 @@ export const useAbility = (player: Player, ability: Ability, target?: Enemy): { 
   // Apply damage
   if (ability.damage && target) {
     damage = Math.max(1, ability.damage - target.stats.defense);
+    
+    // Apply critical hit chance from racial passive
+    if (player.racialPassive.criticalChance && shouldCrit(player.racialPassive.criticalChance)) {
+      damage = Math.floor(damage * 1.5);
+      message += ' Critical hit!';
+    }
+    
     target.stats.currentHealth = Math.max(0, target.stats.currentHealth - damage);
     message += ` Dealt ${damage} damage!`;
   }
 
-  // Apply healing
+  // Apply healing with racial bonus
   if (ability.healing) {
-    const healAmount = Math.min(ability.healing, player.stats.maxHealth - player.stats.currentHealth);
+    let healAmount = ability.healing;
+    
+    // Apply healing bonus from racial passive
+    if (player.racialPassive.healingBonus) {
+      healAmount = Math.floor(healAmount * (1 + player.racialPassive.healingBonus / 100));
+    }
+    
+    healAmount = Math.min(healAmount, player.stats.maxHealth - player.stats.currentHealth);
     player.stats.currentHealth += healAmount;
     healing = healAmount;
     message += ` Healed ${healAmount} HP!`;
@@ -83,6 +128,13 @@ export const checkEnemyDeath = (enemy: Enemy): boolean => {
 };
 
 export const gainRewards = (player: Player, enemy: Enemy): string => {
-  player.gold += enemy.goldReward;
-  return `Defeated ${enemy.name}! Gained ${enemy.goldReward} gold and ${enemy.expReward} exp!`;
+  let goldReward = enemy.goldReward;
+  
+  // Apply gold bonus from racial passive
+  if (player.racialPassive.goldBonus) {
+    goldReward = Math.floor(goldReward * (1 + player.racialPassive.goldBonus / 100));
+  }
+  
+  player.gold += goldReward;
+  return `Defeated ${enemy.name}! Gained ${goldReward} gold and ${enemy.expReward} exp!`;
 };

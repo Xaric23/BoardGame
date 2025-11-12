@@ -50,12 +50,12 @@ export const generateDungeon = (width: number, height: number, depth: number, se
       if (x === Math.floor(width / 2) && y === Math.floor(height / 2) && depth === 1) {
         type = 'start';
       }
-      // Exit in one of the corners
-      else if (depth % 5 === 0 && x === width - 1 && y === height - 1) {
+      // Exit in one of the corners (only on floors 5, 10, 15, etc., not on floor 1)
+      else if (depth > 1 && depth % 5 === 0 && x === width - 1 && y === height - 1) {
         type = 'exit';
       }
       // Boss every 5 levels
-      else if (depth % 5 === 0 && x === width - 2 && y === height - 2) {
+      else if (depth > 1 && depth % 5 === 0 && x === width - 2 && y === height - 2) {
         type = 'boss';
       }
       // Random tile types
@@ -126,21 +126,41 @@ const generateLoot = (depth: number, random: SeededRandom): Item[] => {
     let item: Item;
 
     if (roll < 0.3) {
-      // Weapon
+      // Weapon - more variety
+      const weaponTypes = [
+        { name: 'Sword', bonus: 2 },
+        { name: 'Axe', bonus: 3 },
+        { name: 'Bow', bonus: 2 },
+        { name: 'Dagger', bonus: 1 },
+        { name: 'Mace', bonus: 2 },
+        { name: 'Spear', bonus: 2 },
+        { name: 'Staff', bonus: 2 },
+      ];
+      const weaponType = weaponTypes[random.nextInt(0, weaponTypes.length - 1)];
       item = {
         id: `weapon_${random.next()}`,
-        name: `Sword +${depth}`,
+        name: `${weaponType.name} +${depth}`,
         type: 'weapon',
-        attackBonus: 2 + depth,
+        attackBonus: weaponType.bonus + depth,
         value: 20 + depth * 10,
       };
     } else if (roll < 0.6) {
-      // Armor
+      // Armor - more variety
+      const armorTypes = [
+        { name: 'Shield', bonus: 1 },
+        { name: 'Helmet', bonus: 1 },
+        { name: 'Chestplate', bonus: 2 },
+        { name: 'Boots', bonus: 1 },
+        { name: 'Gauntlets', bonus: 1 },
+        { name: 'Ring of Protection', bonus: 1 },
+        { name: 'Amulet', bonus: 1 },
+      ];
+      const armorType = armorTypes[random.nextInt(0, armorTypes.length - 1)];
       item = {
         id: `armor_${random.next()}`,
-        name: `Shield +${depth}`,
+        name: `${armorType.name} +${depth}`,
         type: 'armor',
-        defenseBonus: 1 + depth,
+        defenseBonus: armorType.bonus + depth,
         value: 15 + depth * 8,
       };
     } else if (roll < 0.9) {
